@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Евгений Вахтангов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Italiana&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --velvet:#170506;
+  --velvet-2:#240808;
+  --wine:#3a0b10;
+  --wine-2:#5a1220;
+  --gold:#c9a961;
+  --gold-2:#e0c88a;
+  --gold-3:#8b7440;
+  --bone:#f0e6d2;
+  --bone-2:#c9bda6;
+  --muted:#8a7a6a;
+  --muted-2:#5a4d42;
+  --line:rgba(201,169,97,.28);
+  --line-2:rgba(201,169,97,.12);
+
+  --page-w:210mm;
+  --page-h:297mm;
+  --page-pad-x:17mm;
+  --page-pad-top:14mm;
+  --page-pad-bottom:16mm;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{ min-width:0; background:#0a0303; }
+
+body{
+  font-family:"Fraunces","Georgia",serif;
+  background:#0a0303;
+  color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"lnum","kern","liga","ss01";
+  margin:0;
+  padding:24px 0 60px;
+}
+
+.deck{
+  width:var(--page-w);
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+.slide{
+  position:relative;
+  width:var(--page-w);
+  height:var(--page-h);
+  min-height:var(--page-h);
+  flex:0 0 var(--page-h);
+  background:var(--velvet);
+  padding:var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+  isolation:isolate;
+  overflow:hidden;
+
+  box-shadow:
+    0 28px 70px -20px rgba(0,0,0,.9),
+    0 0 0 1px rgba(201,169,97,.15);
+
+  break-after:page;
+  page-break-after:always;
+  break-inside:avoid;
+  page-break-inside:avoid;
+}
+
+.slide:last-child{ break-after:auto; page-break-after:auto; }
+
+.slide::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,.35) 0,
+      rgba(0,0,0,0) 30px,
+      rgba(255,255,255,.025) 60px,
+      rgba(0,0,0,0) 90px,
+      rgba(0,0,0,.35) 120px
+    );
+  pointer-events:none;
+  z-index:0;
+  opacity:.7;
+}
+
+.slide::after{
+  content:"";
+  position:absolute;
+  top:-320px;
+  left:50%;
+  transform:translateX(-50%);
+  width:1200px;
+  height:600px;
+  background:
+    radial-gradient(ellipse at 50% 100%,
+      rgba(224,200,138,.16) 0%,
+      rgba(224,200,138,.06) 25%,
+      transparent 55%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.frame{
+  position:absolute;
+  inset:7mm;
+  border:1px solid var(--line);
+  pointer-events:none;
+  z-index:2;
+}
+
+.frame::before,
+.frame::after{
+  content:"";
+  position:absolute;
+  width:22px;
+  height:22px;
+  border:1px solid var(--gold);
+}
+
+.frame::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+.frame::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+.chrome{
+  position:relative;
+  z-index:3;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-height:9mm;
+  padding-bottom:4mm;
+  font-family:"Jost",sans-serif;
+  font-size:9px;
+  letter-spacing:2.8px;
+  text-transform:uppercase;
+  color:var(--bone-2);
+  font-weight:400;
+  border-bottom:1px solid var(--line-2);
+  margin-bottom:6mm;
+}
+
+.chrome-mark, .chrome-folio{ display:flex; align-items:center; gap:10px; }
+
+.chrome-mark::before{
+  content:"";
+  width:5px;
+  height:5px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  box-shadow:0 0 10px rgba(201,169,97,.6);
+}
+
+.chrome-folio b{
+  font-family:"Fraunces",serif;
+  font-weight:400;
+  font-style:italic;
+  font-size:15px;
+  color:var(--gold-2);
+  letter-spacing:0;
+  text-transform:none;
+}
+
+.chrome-folio .sep{ color:var(--gold-3); margin:0 3px; }
+
+h1{
+  font-family:"Fraunces",serif;
+  font-weight:300;
+  font-size:54px;
+  line-height:.96;
+  letter-spacing:-.03em;
+  color:var(--bone);
+  margin-bottom:14px;
+  font-variation-settings:"opsz" 144,"SOFT" 50,"WONK" 0;
+}
+
+h1 .kicker{
+  display:block;
+  font-family:"Italiana",serif;
+  font-size:.26em;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:12px;
+  font-weight:400;
+}
+
+h1 em{ font-style:italic; font-weight:300; color:var(--gold-2); text-shadow:0 0 30px rgba(224,200,138,.25); }
+
+h2{
+  font-family:"Fraunces",serif;
+  font-weight:300;
+  font-size:34px;
+  line-height:1.02;
+  letter-spacing:-.025em;
+  color:var(--bone);
+  margin-bottom:14px;
+  font-variation-settings:"opsz" 144,"SOFT" 40,"WONK" 1;
+}
+
+h2 em{ font-style:italic; font-weight:300; color:var(--gold-2); }
+
+h2 .kicker{
+  display:block;
+  font-family:"Jost",sans-serif;
+  font-size:8.5px;
+  font-weight:500;
+  letter-spacing:3.1px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+h3{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-family:"Jost",sans-serif;
+  font-size:8.5px;
+  font-weight:500;
+  letter-spacing:2.8px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:14px 0 8px;
+}
+
+h3::before{ content:""; width:4px; height:4px; background:var(--gold); transform:rotate(45deg); flex-shrink:0; }
+h3::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent); }
+
+p,li{
+  font-family:"Fraunces",serif;
+  font-size:13.6px;
+  line-height:1.5;
+  color:var(--bone-2);
+  margin-bottom:8px;
+  font-weight:300;
+  letter-spacing:.002em;
+  font-variation-settings:"opsz" 14,"SOFT" 40;
+}
+
+p strong,p b,li strong,li b{ color:var(--bone); font-weight:500; font-style:italic; }
+p em{ color:var(--gold-2); font-style:italic; font-weight:400; }
+
+.dropcap::first-letter{
+  font-family:"Fraunces",serif;
+  font-weight:300;
+  font-style:italic;
+  font-size:4.4em;
+  line-height:.82;
+  float:left;
+  padding:5px 12px 0 0;
+  color:var(--gold-2);
+  text-shadow:0 0 25px rgba(224,200,138,.3);
+}
+
+ul{
+  padding-left:0;
+  list-style:none;
+  margin-bottom:12px;
+}
+
+ul li{
+  padding-left:27px;
+  position:relative;
+  margin-bottom:7px;
+}
+
+ul li::before{
+  content:"";
+  position:absolute;
+  left:6px;
+  top:10px;
+  width:5px;
+  height:5px;
+  background:var(--gold);
+  transform:rotate(45deg);
+}
+
+ul li:nth-child(even)::before{ background:var(--gold-3); }
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:26px;
+  align-items:start;
+}
+
+/* ===== ФОТО: НЕ ОБРЕЗАЕТСЯ, ВПИСАНО В БАРХАТНОЕ ПАСПАРТУ ===== */
+.img-frame{
+  position:relative;
+  padding:7px;
+  background:linear-gradient(180deg,rgba(201,169,97,.07),rgba(201,169,97,.02));
+  border:1px solid var(--line);
+  box-shadow:
+    inset 0 0 30px rgba(201,169,97,.05),
+    0 18px 34px -18px rgba(0,0,0,.85);
+  overflow:hidden;
+  display:block;
+  width:100%;
+  max-width:100%;
+}
+
+.img-frame::before,
+.img-frame::after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  z-index:3;
+  box-shadow:0 0 10px rgba(201,169,97,.7);
+}
+
+.img-frame::before{ top:-3px; left:-3px; }
+.img-frame::after{ bottom:-3px; right:-3px; }
+
+.hero-img{
+  display:block;
+  width:100%;
+  height:100mm;
+  object-fit:contain;                 /* ← ключевое: фото вписывается целиком */
+  object-position:center;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(224,200,138,.10), transparent 62%),
+    linear-gradient(180deg,#1a0606,#0f0303);
+  position:relative;
+  z-index:1;
+  border-radius:2px;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+.hero-img.h-85{ height:85mm; }
+.hero-img.h-90{ height:90mm; }
+.hero-img.h-95{ height:95mm; }
+.hero-img.h-100{ height:100mm; }
+.hero-img.h-105{ height:105mm; }
+.hero-img.h-110{ height:110mm; }
+
+.caption{
+  font-family:"Jost",sans-serif;
+  font-size:8px;
+  letter-spacing:2.3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:9px;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:400;
+}
+
+.caption::before{ content:""; width:20px; height:1px; background:var(--gold-3); }
+
+/* ===== STATS ===== */
+.stats-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 28px;
+  margin-top:18px;
+}
+
+.stat{
+  padding:10px 0;
+  border-top:1px solid var(--line-2);
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+}
+
+.stat:last-child{ border-bottom:1px solid var(--line-2); }
+
+.stat .n{
+  font-family:"Fraunces",serif;
+  font-weight:300;
+  font-style:italic;
+  font-size:38px;
+  line-height:.85;
+  letter-spacing:-.03em;
+  color:var(--gold-2);
+  text-shadow:0 0 25px rgba(224,200,138,.25);
+  font-variation-settings:"opsz" 144,"SOFT" 50;
+  flex-shrink:0;
+}
+
+.stat .lbl{
+  font-family:"Jost",sans-serif;
+  font-size:8px;
+  letter-spacing:2.2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  line-height:1.55;
+  font-weight:400;
+}
+
+.head-block{ margin-bottom:12px; }
+
+.ornament{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:10px 0 14px;
+  color:var(--gold);
+}
+
+.ornament::before,
+.ornament::after{
+  content:"";
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-3),transparent);
+  flex:1;
+  max-width:160px;
+}
+
+.ornament i{
+  display:block;
+  width:5px; height:5px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  box-shadow:0 0 10px rgba(201,169,97,.5);
+}
+.ornament i:nth-child(2){ width:8px; height:8px; background:var(--gold-2); }
+
+.big-num{
+  position:absolute;
+  right:-20px;
+  bottom:-95px;
+  font-family:"Fraunces",serif;
+  font-weight:300;
+  font-style:italic;
+  font-size:330px;
+  line-height:.82;
+  letter-spacing:-.05em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(201,169,97,.14);
+  pointer-events:none;
+  z-index:1;
+  user-select:none;
+  font-variation-settings:"opsz" 144,"SOFT" 50;
+}
+
+.stage-footer{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:8mm;
+  text-align:center;
+  font-family:"Italiana",serif;
+  font-size:8.5px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--muted);
+  z-index:3;
+}
+
+.stage-footer .diamond{
+  color:var(--gold);
+  margin:0 11px;
+  text-shadow:0 0 10px rgba(201,169,97,.5);
+}
+
+/* ===== TITLE ===== */
+.title-slide .chrome{
+  border-bottom:1px solid var(--line);
+  margin-bottom:5mm;
+}
+
+.title-slide h1{
+  text-align:center;
+  margin:0 auto 10px;
+}
+
+.title-slide .lead{
+  font-family:"Fraunces",serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:16px;
+  line-height:1.42;
+  color:var(--bone-2);
+  max-width:620px;
+  margin:0 auto 16px;
+  text-align:center;
+  letter-spacing:-.005em;
+}
+
+.title-slide .lead em{ color:var(--gold-2); font-weight:400; }
+
+.bulbs{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+  margin-bottom:12px;
+  position:relative;
+  z-index:3;
+}
+
+.bulbs i{
+  display:block;
+  width:3px; height:3px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:
+    0 0 5px rgba(224,200,138,.7),
+    0 0 11px rgba(224,200,138,.35);
+}
+
+.bulbs i:nth-child(3n+2){ background:var(--gold-3); box-shadow:none; }
+
+/* плотные */
+.slide.tight p{
+  font-size:12.6px;
+  line-height:1.45;
+  margin-bottom:7px;
+}
+.slide.tight h2{ font-size:30px; margin-bottom:10px; }
+.slide.tight .caption{ margin-bottom:10px; }
+
+@media screen and (max-width:900px){
+  body{ padding:12px 0 35px; overflow-x:auto; }
+  .deck{ gap:14px; }
+}
+
+@media screen and (max-width:700px){
+  body{ padding:8px 0 20px; }
+  .deck{ width:100%; align-items:center; }
+  .slide{
+    width:min(100vw,210mm);
+    height:auto;
+    min-height:0;
+    aspect-ratio:210 / 297;
+    flex:0 0 auto;
+    padding:6.5vw 5.2vw 7vw;
+  }
+  .frame{ inset:2.4vw; }
+  .chrome{ font-size:7px; letter-spacing:2px; margin-bottom:3.5vw; }
+  h1{font-size:7.6vw;}
+  h2{font-size:5vw;}
+  h2 .kicker{font-size:1.25vw;}
+  p,li{font-size:1.85vw;line-height:1.48;}
+  .hero-img{height:auto !important; aspect-ratio:16/10;}
+  .two-col{gap:4vw;}
+  .stat .n{font-size:6vw;}
+  .big-num{font-size:44vw;}
+  .stage-footer{font-size:1.4vw;}
+}
+
+@page{ size:A4 portrait; margin:0; }
+
+@media print{
+  html,body{
+    width:210mm;
+    min-width:210mm;
+    margin:0 !important;
+    padding:0 !important;
+    background:var(--velvet) !important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  body{ overflow:visible !important; }
+  .deck{ width:210mm; margin:0; padding:0; display:block; }
+  .slide{
+    width:210mm;
+    height:297mm;
+    min-height:297mm;
+    max-height:297mm;
+    margin:0 !important;
+    padding:var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+    box-shadow:none;
+    overflow:hidden;
+    break-after:page !important;
+    page-break-after:always !important;
+    break-inside:avoid !important;
+    page-break-inside:avoid !important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .slide:last-child{ break-after:auto !important; page-break-after:auto !important; }
+  .slide, .slide *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+
+<body>
+<div class="deck">
+
+  <!-- 01 -->
+  <section class="slide title-slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Биография · Начало</span>
+      <span class="chrome-folio"><b>01</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div class="bulbs">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+
+    <div style="position:relative;z-index:3;">
+      <h1>
+        <span class="kicker">Евгений Богратионович</span>
+        Евгений <em>Вахтангов</em>
+      </h1>
+
+      <p class="lead">Режиссёр, актёр, педагог — <em>создатель «фантастического реализма»</em> и Театра имени Вахтангова.</p>
+
+      <div class="img-frame">
+        <img class="hero-img h-100"
+             src="https://i.ibb.co/8ncLGsKG/1.jpg"
+             alt="Евгений Вахтангов">
+      </div>
+      <div class="caption">Евгений Богратионович Вахтангов</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">Родился 13 февраля 1883 года во Владикавказе в русско-армянской купеческой семье. Его отец был крупным табачным фабрикантом и надеялся, что сын продолжит его дело. Но, Вахтангов еще в гимназические годы увлекся театром и решил посвятить ему всю свою жизнь.</p>
+        </div>
+        <div>
+          <p>Учился во Владикавказской гимназии, увлекался танцами, игрой на мандолине, печатал статьи и рассказы в гимназической газете «Нус». С 1901 года участвовал в любительских драмкружках в качестве актёра и постановщика спектаклей. Особенно любил острохарактерные роли, в том числе женские. В эти же годы выступал с рассказами и статьями о театре во владикавказской газете «Терек».</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">I</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Начало пути · Владикавказ <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 02 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Биография · Университет</span>
+      <span class="chrome-folio"><b>02</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">Московский университет</span>
+          Институтские <em>годы</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-110"
+             src="https://i.ibb.co/W4ywMp4V/2.jpg"
+             alt="Вахтангов в студенческие годы">
+      </div>
+      <div class="caption">Студенческие годы · Москва</div>
+
+      <p class="dropcap">Окончив гимназию, Евгений Вахтангов поступил в Московский университет на физико-математическое отделение и сразу же влился в студенческий театральный кружок. На втором курсе Вахтангов перешел на юридический факультет и в том же году дебютировал как режиссер, поставив студенческий спектакль «Педагоги» по пьесе О. Эрнста. Спектакль состоялся 12 января 1905 года и был дан в пользу нуждающихся. В студенческие годы, часто приезжая из Москвы во Владикавказ, Вахтангов пытается и в родном городе организовать свой театр.</p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1905</span>
+          <span class="lbl">Дебют как режиссёра · «Педагоги»</span>
+        </div>
+        <div class="stat">
+          <span class="n">12.I</span>
+          <span class="lbl">Дата студенческого спектакля</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">II</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Университет · 1905 <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 03 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Биография · Театр</span>
+      <span class="chrome-folio"><b>03</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">Школа Адашева · МХТ</span>
+          Вахтангов и <em>театральный институт</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-105"
+             src="https://i.ibb.co/3y47bf3D/3.jpg"
+             alt="Вахтангов в МХТ">
+      </div>
+      <div class="caption">Первая студия МХТ</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">В 1909 году Вахтангов связывает свою жизнь с театром и поступает в московскую театральную школу Александра Адашева в Москве, по окончании которой в 1911 году был принят в труппу Московского Художественного театра.</p>
+        </div>
+        <div>
+          <p>Вскоре на молодого актера обратил внимание К.С. Станиславский. Он поручил Вахтангову вести практические занятия по своей методике актерского мастерства в Первой студии МХТ. Здесь он создал несколько камерных спектаклей, в которых играл и как актер. Роль Фрезера, которую он исполнил в «Потопе» Бергера — его выдающаяся работа.</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1909</span>
+          <span class="lbl">Школа Александра Адашева</span>
+        </div>
+        <div class="stat">
+          <span class="n">1911</span>
+          <span class="lbl">Принят в труппу МХТ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">III</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Школа Адашева · МХТ <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 04 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Студия · МХТ</span>
+      <span class="chrome-folio"><b>04</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">1913 · Подполье</span>
+          3 студия <em>МХТ</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-110"
+             src="https://i.ibb.co/tMRQj8ph/4.jpg"
+             alt="3 студия МХТ">
+      </div>
+      <div class="caption">Студия Вахтангова</div>
+
+      <p class="dropcap">В 1913 году вместе с группой студентов основал и возглавил Студенческую студию, позже преобразованную в 3-ю студию МХТ. Руководство МХТ не разрешало Вахтангову работать на стороне, и первое время студия существовала «подпольно»: ставили спектакли на съёмных квартирах, декорации изготавливали из мешковины. Только в 1917 году театр публично заявил о себе как Московская драматическая студия Вахтангова.</p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1913</span>
+          <span class="lbl">Основание Студенческой студии</span>
+        </div>
+        <div class="stat">
+          <span class="n">1917</span>
+          <span class="lbl">Московская драматическая студия</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">IV</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Подпольная студия · 1913 <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 05 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Метод · Концепция</span>
+      <span class="chrome-folio"><b>05</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">Собственный путь</span>
+          «Фантастический <em>реализм»</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-110"
+             src="https://i.ibb.co/BH2pjMpw/5.jpg"
+             alt="Вахтангов · фантастический реализм">
+      </div>
+      <div class="caption">Теория собственного театра</div>
+
+      <p class="dropcap">Со временем Вахтангову стали казаться тесными жесткие рамки рекомендаций Станиславского. Он увлекся театральными идеями Мейерхольда, но довольно скоро их отверг. У Евгения Вахтангова формируется свое понимание театра, довольно отличное от Станиславского, которое он сформулировал в одном коротком лозунге — «фантастический реализм». На основе этого Вахтангов построил теорию собственного театра. Он считал, что главным в спектакле является актер.</p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">«ФР»</span>
+          <span class="lbl">Фантастический реализм · лозунг</span>
+        </div>
+        <div class="stat">
+          <span class="n">Актёр</span>
+          <span class="lbl">Главное в спектакле</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">V</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Фантастический реализм <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 06 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Синтез · Парадокс</span>
+      <span class="chrome-folio"><b>06</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">Станиславский + Мейерхольд</span>
+          Синтез <em>методологий</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-105"
+             src="https://i.ibb.co/qYYXQc47/6.jpg"
+             alt="Синтез Станиславского и Мейерхольда">
+      </div>
+      <div class="caption">Театральный парадокс</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">Вахтангов был убежден, что каждая пьеса требует собственной формы театрального воплощения и задача режиссера — найти ее. Евгений Вахтангов — первый и, пожалуй, единственный режиссер в истории театра, достигший практического синтеза методологий двух революционных мастеров русской актерской школы — Станиславского и Мейерхольда.</p>
+        </div>
+        <div>
+          <p>Он считал сочетание этих методик апогеем театрального синтеза и назвал его «фантастическим реализмом». Эта концепция породила театральный парадокс: создание актерской техники, которая была бы внешне очень стилизованной, но внутренне реалистичной. Иначе говоря, актер должен испытывать на сцене реальные и правдоподобные чувства, но представлять их в театральном, «фантастическом» виде.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">VI</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Апогей театрального синтеза <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 07 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Работы · Премьеры</span>
+      <span class="chrome-folio"><b>07</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">1921–1922</span>
+          Главные работы <em>Евгения Вахтангова</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-110"
+             src="https://i.ibb.co/4ZWTnJrb/7.jpg"
+             alt="Главные работы Вахтангова">
+      </div>
+      <div class="caption">«Эрик XIV» · «Гадибук» · «Принцесса Турандот»</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">В 1921 году на сцене своей студии он ставит пьесу М. Метерлинка «Чудо Святого Антония». День его премьеры – 13 ноября считается Днем рождения Театра имени Евгения Вахтангова.</p>
+        </div>
+        <div>
+          <p>В период с 1921 – 1922 год Вахтангов выпускает три гениальных спектакля: «Эрик XIV», «Гадибук», «Принцесса Турандот».</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1921</span>
+          <span class="lbl">«Чудо Святого Антония» · 13 ноября</span>
+        </div>
+        <div class="stat">
+          <span class="n">3</span>
+          <span class="lbl">Спектакля · 1921–1922</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">VII</div>
+    <div class="stage-footer"><span class="diamond">◆</span> День рождения театра · 13 ноября <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 08 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Спектакль · Турандот</span>
+      <span class="chrome-folio"><b>08</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">Комедия дель арте</span>
+          «Принцесса <em>Турандот»</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-90"
+             src="https://i.ibb.co/Lygx2y2/8.jpg"
+             alt="Принцесса Турандот">
+      </div>
+      <div class="caption">«Принцесса Турандот» · МХТ</div>
+
+      <div class="two-col">
+        <div>
+          <p>Вахтангов хотел поставить пьесу Фридриха Шиллера, но отдельные отрывки ему не понравились. Тогда возникла идея поставить спектакль в духе комедии дель арте. Артисты перевоплотились не в героев сказки, а в актёров театральной труппы, разыгрывающих свой спектакль про Турандот.</p>
+          <p>Считается, что вахтанговская трактовка «Принцессы Турандот» и принципы иронической сказки, которые применил режиссёр, повлияли на дальнейшее развитие жанра литературной сказки. Также стиль «Принцессы Турандот» оказался определяющим для будущего театра, и спектакль стал символом всего театрального направления и театральной школы, основывающейся на вахтанговской концепции «театра-праздника».</p>
+        </div>
+        <div>
+          <p>В постановке были заняты лучшие ученики Вахтангова. Роль капризной принцессы исполнила Цецилия Мансурова, а принца Калафа Юрий Завадский. Также были задействованы Осип Басов, Борис Захава, Борис Щукин, Рубен Симонов, Анна Орочко, Иван Кудрявцев. Многие из них тогда только начинали свою карьеру, а впоследствии получили звания народных артистов СССР.</p>
+          <p>Их неопытность режиссера не пугала, скорее, подстегивала — ему было очень интересно, что из всего этого выйдет. Для спектакля они прошли специальную подготовку. Приглашенные преподаватели занимались с ними речью, декламацией, пением, постановкой голоса. Комедия дель арте требовала особого подхода, гротескного поведения.</p>
+        </div>
+      </div>
+
+      <p>Вахтангов решил сделать характеры персонажей ярче, добавив одну интересную деталь. По сюжету явно прослеживается соперничество Турандот и ее невольницы Адельмы за внимание принца Калафа, и Вахтангов подсказал, что эти же чувства могут испытывать и актрисы, изображающие их. Правда, этот прием со временем исчез из спектакля.</p>
+    </div>
+
+    <div class="big-num">VIII</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Театр-праздник · символ театра <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 09 -->
+  <section class="slide tight">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Традиции · Продолжатели</span>
+      <span class="chrome-folio"><b>09</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">После Вахтангова</span>
+          Продолжатели <em>традиций режиссёра</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-85"
+             src="https://i.ibb.co/Xx8f9F0k/9.jpg"
+             alt="Продолжатели традиций Вахтангова">
+      </div>
+      <div class="caption">Шварц · Товстоногов · ученики</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">Из вахтанговской «Принцессы Турандот» выросли пьесы Евгения Шварца — «Дракон», «Золушка». А легендарный советский режиссер Георгий Товстоногов, посмотрев однажды спектакль, назвал Евгения Вахтангова, к тому времени уже покойного, своим учителем.</p>
+          <p>В своих героев артисты превращались прямо на глазах у публики, надевая какой-нибудь роскошный расшитый халат поверх современного костюма. В диалогах персонажи обсуждали не только действие на сцене, но и актуальную повестку — все, что происходило на тот момент в стране. Вахтангов был уверен, что после 1917 года искусство, театральное в том числе, не может оставаться прежним, элитарным, оторванным от реальной жизни.</p>
+          <h3>О самой пьесе · От комедии до трагедии</h3>
+          <p>Турандот, дочь китайского императора, не желает выходить замуж. Она развлекается тем, что велит казнить незадачливых женихов, которые не проходят проверку. Она загадывает им три сложные загадки, кто не угадает — может прощаться с жизнью. Однажды в городе появляется находчивый принц Калаф, которому удается растопить сердце жестокой красавицы.</p>
+        </div>
+        <div>
+          <p>Театральную сказку «Турандот», в которой ужасное соединяется со смешным, Карло Гоцци написал в 1762 году. Пьеса, созданная в простом стиле комедии дель арте, стала важным ходом его борьбы с буржуазным реалистическим театром Карло Гольдони и Пьетро Кьяри. Как позже записал в своих воспоминаниях Гоцци, вскоре после венецианской премьеры «Турандот» враги потеряли былую популярность в Италии. Гольдони в поисках лучшей доли переместился в Париж, а Кьяри и вовсе перестал писать.</p>
+          <p>Их неопытность режиссера не пугала, скорее, подстегивала — ему было очень интересно, что из всего этого выйдет. Для спектакля они прошли специальную подготовку.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">IX</div>
+    <div class="stage-footer"><span class="diamond">◆</span> «Дракон» · «Золушка» · Товстоногов <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Финал · Прощание</span>
+      <span class="chrome-folio"><b>10</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">23–24 февраля 1922</span>
+          Последние минуты <em>жизни...</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-100"
+             src="https://i.ibb.co/zV01KG2z/10.jpg"
+             alt="Последние минуты жизни Вахтангова">
+      </div>
+      <div class="caption">«Прощайте» · 29 мая 1922</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">В ночь с 23 на 24 февраля 1922 года состоялась последняя репетиция в жизни Вахтангова спектакля «Принцесса Турандот». Репетировал он в шубе, обмотав голову мокрым полотенцем. Вернувшись домой после репетиции, Вахтангов лег и более уже не вставал.</p>
+        </div>
+        <div>
+          <p>После первого репетиционного прогона «Принцессы Турандот» Станиславский сказал своему гениальному ученику, что тот может заснуть, «завернувшись в тогу победителя».</p>
+          <p>Евгений Богратионович ушел из жизни 29 мая 1922 года в окружении своих учеников. Перед самой смертью сознание вернулось к нему. Он сел, окинул учеников долгим взглядом и очень спокойно сказал: — «Прощайте».</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1922</span>
+          <span class="lbl">Последняя репетиция · 23–24 февраля</span>
+        </div>
+        <div class="stat">
+          <span class="n">29.V</span>
+          <span class="lbl">День ухода · 29 мая 1922</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">X</div>
+    <div class="stage-footer"><span class="diamond">◆</span> «Завернувшись в тогу победителя» <span class="diamond">◆</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="frame"></div>
+    <header class="chrome">
+      <span class="chrome-mark">Память · Наследие</span>
+      <span class="chrome-folio"><b>11</b><span class="sep">/</span>11</span>
+    </header>
+
+    <div style="position:relative;z-index:3;">
+      <div class="head-block">
+        <h2>
+          <span class="kicker">1926 · 1931 · 1996</span>
+          Памяти <em>Евгения Вахтангова</em>
+        </h2>
+      </div>
+
+      <div class="img-frame">
+        <img class="hero-img h-90"
+             src="https://i.ibb.co/9k8Jj1nK/11.jpg"
+             alt="Памяти Евгения Вахтангова">
+      </div>
+      <div class="caption">Театр имени Евгения Вахтангова</div>
+
+      <div class="two-col">
+        <div>
+          <p class="dropcap">В 1926 году 3-я студия МХТ была переименована в Государственный академический театр имени Евгения Багратионовича Вахтангова. А в 1931 году при театре был создан музей, основой которого стали материалы, собранные женой Е. Вахтангова.</p>
+          <p>В 1996 году Русскому театру во Владикавказе было присвоено имя Евгения Вахтангова. В доме, где жил Вахтангов в 1918—1922 годах в 1923 году была открыта мемориальная квартира, на доме была установлена памятная доска. В 1924—1993 годах имя Вахтангова носил Большой Николопесковский переулок в районе Арбата. Во Владикавказе есть переулок Вахтангова.</p>
+        </div>
+        <div>
+          <h3>Возобновления «Принцессы Турандот»</h3>
+          <p>Постановка пережила несколько редакций с новыми актерскими составами. В 1963 году ее возобновил когда-то игравший в спектакле Вахтангова Рубен Симонов — с Василием Лановым и Юлией Борисовой в главных ролях. В 1991-м новую версию «Принцессы Турандот» создал Гарий Черняховский. Художественный совет приостановил спектакль в 2006 году.</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="n">1926</span>
+          <span class="lbl">Театр имени Евгения Вахтангова</span>
+        </div>
+        <div class="stat">
+          <span class="n">2006</span>
+          <span class="lbl">Спектакль приостановлен</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-num">XI</div>
+    <div class="stage-footer"><span class="diamond">◆</span> Театр имени Вахтангова · наследие <span class="diamond">◆</span></div>
+  </section>
+
+</div>
+</body>
+</html>
